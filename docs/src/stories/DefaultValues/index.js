@@ -1,11 +1,9 @@
 import React from 'react'
-
 import DropdownTreeSelect from '../../../../src'
 import '../../../../dist/styles.css'
-
 import './index.css'
 import data from './data.json'
-
+/* import {Form} from 'antd' */
 const onChange = (curNode, selectedNodes) => {
   console.log('onChange::', curNode, selectedNodes)
 }

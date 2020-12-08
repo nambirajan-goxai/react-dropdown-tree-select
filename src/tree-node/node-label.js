@@ -37,7 +37,7 @@ class NodeLabel extends PureComponent {
   }
 
   render() {
-    const { mode, title, label, id, partial, checked } = this.props
+    const { mode, title, label, id, partial, checked, isLeaf } = this.props
     const { value, disabled, showPartiallySelected, readOnly, clientId } = this.props
     const nodeLabelProps = { className: 'node-label' }
 
@@ -57,13 +57,15 @@ class NodeLabel extends PureComponent {
         {mode === 'radioSelect' ? (
           <RadioButton name={clientId} className="radio-item" onChange={this.handleCheckboxChange} {...sharedProps} />
         ) : (
-          <Checkbox
-            name={id}
-            className={className}
-            indeterminate={showPartiallySelected && partial}
-            onChange={this.handleCheckboxChange}
-            {...sharedProps}
-          />
+          isLeaf && (
+            <Checkbox
+              name={id}
+              className={className}
+              indeterminate={showPartiallySelected && partial}
+              onChange={this.handleCheckboxChange}
+              {...sharedProps}
+            />
+          )
         )}
         <span {...nodeLabelProps}>{label}</span>
       </label>

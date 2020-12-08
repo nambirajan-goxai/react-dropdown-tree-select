@@ -5,7 +5,7 @@ import DropdownTreeSelect from '../../../../src'
 
 import './index.css'
 import data from './data.json'
-
+import metrics from './metrics'
 class WithOptions extends PureComponent {
   constructor(props) {
     super(props)
@@ -141,7 +141,7 @@ class WithOptions extends PureComponent {
         <div>
           <DropdownTreeSelect
             id="rdts"
-            data={data}
+            data={metrics.children}
             onChange={this.onChange}
             onAction={this.onAction}
             onNodeToggle={this.onNodeToggle}

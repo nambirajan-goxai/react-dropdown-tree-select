@@ -1,32 +1,67 @@
-import React, { PureComponent } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Tag from '../tag'
 import { getDataset } from '../utils'
-
 import './index.css'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 const getTags = (tags = [], onDelete, readOnly, disabled, labelRemove) =>
-  tags.map(tag => {
+  tags.map((tag, index) => {
     const { _id, label, tagClassName, dataset, tagLabel } = tag
     return (
-      <li
-        className={['tag-item', tagClassName].filter(Boolean).join(' ')}
-        key={`tag-item-${_id}`}
-        {...getDataset(dataset)}
-      >
-        <Tag
-          label={tagLabel || label}
-          id={_id}
-          onDelete={onDelete}
-          readOnly={readOnly}
-          disabled={disabled || tag.disabled}
-          labelRemove={labelRemove}
-        />
-      </li>
+      <Draggable key={_id} draggableId={_id} index={index}>
+        {provided => (
+          <li
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            className={['tag-item', tagClassName].filter(Boolean).join(' ')}
+            key={_id}
+            {...getDataset(dataset)}
+          >
+            <Tag
+              label={tagLabel || label}
+              id={`${_id}`}
+              onDelete={onDelete}
+              readOnly={readOnly}
+              disabled={disabled || tag.disabled}
+              labelRemove={labelRemove}
+            />
+          </li>
+        )}
+      </Draggable>
     )
   })
+const Tags = props => {
+  const { tags, onTagRemove, texts = {}, disabled, readOnly, children } = props
+  const [items, setItems] = useState(props.tags)
+  useEffect(() => {
+    setItems(props.tags)
+  }, [props.tags])
+  function handleOnDragEnd(result) {
+    console.log(result)
+    const i = Array.from(items)
+    const [reorderedItem] = i.splice(result.source.index, 1)
+    i.splice(result.destination.index, 0, reorderedItem)
 
-class Tags extends PureComponent {
+    setItems(i)
+  }
+
+  const lastItem = children || <span className="placeholder">{texts.placeholder || 'Choose...'}</span>
+  return (
+    <DragDropContext onDragEnd={handleOnDragEnd}>
+      <Droppable droppableId="tag-list" direction="horizontal">
+        {provided => (
+          <ul className="tag-list" {...provided.droppableProps} ref={provided.innerRef}>
+            {getTags(items, onTagRemove, readOnly, disabled, texts.labelRemove)}
+            <li className="tag-item">{lastItem}</li>
+          </ul>
+        )}
+      </Droppable>
+    </DragDropContext>
+  )
+}
+/* class Tags extends PureComponent {
   static propTypes = {
     tags: PropTypes.array,
     onTagRemove: PropTypes.func,
@@ -41,12 +76,12 @@ class Tags extends PureComponent {
     const lastItem = children || <span className="placeholder">{texts.placeholder || 'Choose...'}</span>
 
     return (
-      <ul className="tag-list">
-        {getTags(tags, onTagRemove, readOnly, disabled, texts.labelRemove)}
-        <li className="tag-item">{lastItem}</li>
-      </ul>
+
+
+      
+      
     )
   }
-}
+} */
 
 export default Tags

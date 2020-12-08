@@ -29,9 +29,8 @@
 
 .toggle {
   white-space: pre;
-  margin-right: 4px;
+  margin-right: 8px;
   cursor: pointer;
-
   &::after {
     content: ' ';
   }
