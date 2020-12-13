@@ -5,7 +5,7 @@ import DropdownTreeSelect from '../../../../src'
 
 import './index.css'
 import data from './data.json'
-import metrics from './metrics'
+import metrics from '../DefaultValues/metrics'
 class WithOptions extends PureComponent {
   constructor(props) {
     super(props)

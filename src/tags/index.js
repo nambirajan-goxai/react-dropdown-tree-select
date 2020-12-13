@@ -7,11 +7,12 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 const getTags = (tags = [], onDelete, readOnly, disabled, labelRemove) =>
   tags.map((tag, index) => {
-    const { _id, label, tagClassName, dataset, tagLabel } = tag
+    const { _id, label, tagClassName, dataset, tagLabel, description } = tag
     return (
       <Draggable key={_id} draggableId={_id} index={index}>
         {provided => (
           <li
+            /* title = {description} */
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
@@ -33,18 +34,24 @@ const getTags = (tags = [], onDelete, readOnly, disabled, labelRemove) =>
     )
   })
 const Tags = props => {
-  const { tags, onTagRemove, texts = {}, disabled, readOnly, children } = props
-  const [items, setItems] = useState(props.tags)
+  const { tags, value, onTagRemove, onReorder, texts = {}, disabled, readOnly, children } = props
+  /*  console.log('value')
+  console.log(value) */
+  /*  console.log('tags')
+  console.log(tags) */
+
+  const [items, setItems] = useState(tags)
   useEffect(() => {
-    setItems(props.tags)
-  }, [props.tags])
+    setItems(tags)
+  }, [tags])
   function handleOnDragEnd(result) {
-    console.log(result)
+    // console.log(result)
     const i = Array.from(items)
     const [reorderedItem] = i.splice(result.source.index, 1)
     i.splice(result.destination.index, 0, reorderedItem)
 
     setItems(i)
+    onReorder(i)
   }
 
   const lastItem = children || <span className="placeholder">{texts.placeholder || 'Choose...'}</span>

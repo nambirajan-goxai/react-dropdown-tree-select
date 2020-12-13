@@ -67,11 +67,26 @@ class DropdownTreeSelect extends Component {
     this.state = {
       searchModeOn: false,
       currentFocus: undefined,
+      tags: this.props.value,
     }
     this.clientId = props.id || clientIdGenerator.get(this)
   }
 
-  initNewProps = ({ data, mode, showDropdown, showPartiallySelected, searchPredicate }) => {
+  initNewProps = ({ data, mode, value, showDropdown, showPartiallySelected, searchPredicate }) => {
+    /* this.setState({...this.state,tags:value}) */
+    let selectedValues = this.state.tags ? this.state.tags.map(e => e.value) : []
+    data = data.map(e => {
+      let children = e.children.map(c => {
+        let obj = { ...c }
+        if (selectedValues.includes(c.value)) {
+          obj = { ...obj, isDefaultValue: true }
+        } else {
+          obj = { ...obj, isDefaultValue: false }
+        }
+        return obj
+      })
+      return { ...e, children: children }
+    })
     this.treeManager = new TreeManager({
       data,
       mode,
@@ -105,15 +120,24 @@ class DropdownTreeSelect extends Component {
   }
 
   componentWillMount() {
+    // console.log('will mount called')
     this.initNewProps(this.props)
   }
-
+  componentDidUpdate() {
+    //console.log('component did update called')
+    /* console.log(this.props)
+    console.log(this.state) */
+    //this.initNewProps(this.props)
+    // this.setState({...this.state,tags:this.props.value})
+  }
   componentWillUnmount() {
     document.removeEventListener('click', this.handleOutsideClick, false)
   }
 
   componentWillReceiveProps(nextProps) {
-    this.initNewProps(nextProps)
+    /*  console.log('will receive props called')
+    console.log(nextProps)
+    this.initNewProps(nextProps) */
   }
 
   handleClick = (e, callback) => {
@@ -168,7 +192,10 @@ class DropdownTreeSelect extends Component {
       keyboardNavigation.getNextFocusAfterTagDelete(id, prevTags, tags, this.searchInput).focus()
     })
   }
-
+  onTagReorder = i => {
+    this.setState({ ...this.state, tags: i })
+    this.props.onChange({}, i)
+  }
   onNodeToggle = id => {
     this.treeManager.toggleNodeExpandState(id)
     const tree = this.state.searchModeOn ? this.treeManager.matchTree : this.treeManager.tree
@@ -208,9 +235,14 @@ class DropdownTreeSelect extends Component {
     }
 
     keyboardNavigation.adjustFocusedProps(currentFocusNode, node)
+
     this.setState(nextState, () => {
       callback && callback(tags)
+      /*  this.props.onChange(node, tags) */
     })
+    /*   console.log('tags')
+    console.log(this.state.tags) */
+    /*  this.setState({...this.state,tags : tags}) */
     this.props.onChange(node, tags)
   }
 
@@ -294,7 +326,11 @@ class DropdownTreeSelect extends Component {
   render() {
     const { disabled, readOnly, mode, texts, inlineSearchInput, tabIndex } = this.props
     const { showDropdown, currentFocus, tags } = this.state
-
+    /*  console.log('tags')
+    console.log(tags)
+    console.log('value')
+    console.log(this.props.value) */
+    /*     let ttags = this.props.value && this.props.value.length>0 ? this.props.value : tags */
     const activeDescendant = currentFocus ? `${currentFocus}_li` : undefined
 
     const commonProps = { disabled, readOnly, activeDescendant, texts, mode, clientId: this.clientId }
@@ -334,7 +370,7 @@ class DropdownTreeSelect extends Component {
             tags={tags}
             tabIndex={tabIndex}
           >
-            <Tags tags={tags} onTagRemove={this.onTagRemove} {...commonProps}>
+            <Tags tags={tags} onReorder={this.onTagReorder} onTagRemove={this.onTagRemove} {...commonProps}>
               {!inlineSearchInput && searchInput}
             </Tags>
           </Trigger>
