@@ -18,7 +18,8 @@ const CustomFormitem = props => {
     console.log('selectedNodes')
     console.log(selectedNodes)
     if (props.onChange) {
-      props.onChange(selectedNodes)
+      let selected = selectedNodes.map(e => e.value)
+      props.onChange(selected)
     }
   }
   const onAction = (node, action) => {
@@ -29,6 +30,9 @@ const CustomFormitem = props => {
   }
   /* console.log(selected) */
   let data = props.data
+
+  let value = ['metrics.average_page_views', 'metrics.impressions', 'metrics.clicks', 'metrics.bounce_rate']
+  value = undefined
   /* for(let i in selected)
   { */
   /*    let selectedValues = selected ? selected.map(e=>e.value) :[]
@@ -52,7 +56,7 @@ const CustomFormitem = props => {
     // Update the document title using the browser API
     console.log('useEffect customForm')
   })
-  let value = [
+  /* let value = [
     {
       value: 'metrics.impressions',
       label: 'Impressions',
@@ -83,13 +87,13 @@ const CustomFormitem = props => {
       _focused: true,
       hide: false,
     },
-  ]
+  ] */
   return (
     <DropdownTreeSelect
       {...props}
       id="rdts"
       data={data}
-      value={props.value}
+      value={value}
       onChange={onSelectedChange}
       /*  value ={props.value} */
       onAction={onAction}
@@ -119,6 +123,7 @@ const Simple = () => {
   console.log('selected')
   console.log(selected)
   let data = metrics.children
+  //console.log(data)
   /* let data = metrics.children
   let selectedValues = selected ? selected.map(e=>e.value) :[]
   data = data.map(e=>{

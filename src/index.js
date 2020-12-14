@@ -67,18 +67,16 @@ class DropdownTreeSelect extends Component {
     this.state = {
       searchModeOn: false,
       currentFocus: undefined,
-      tags: this.props.value,
     }
     this.clientId = props.id || clientIdGenerator.get(this)
   }
 
   initNewProps = ({ data, mode, value, showDropdown, showPartiallySelected, searchPredicate }) => {
-    /* this.setState({...this.state,tags:value}) */
-    let selectedValues = this.state.tags ? this.state.tags.map(e => e.value) : []
+    value = value ? value : []
     data = data.map(e => {
       let children = e.children.map(c => {
         let obj = { ...c }
-        if (selectedValues.includes(c.value)) {
+        if (value.includes(c.value)) {
           obj = { ...obj, isDefaultValue: true }
         } else {
           obj = { ...obj, isDefaultValue: false }
@@ -87,6 +85,7 @@ class DropdownTreeSelect extends Component {
       })
       return { ...e, children: children }
     })
+
     this.treeManager = new TreeManager({
       data,
       mode,
@@ -94,6 +93,16 @@ class DropdownTreeSelect extends Component {
       rootPrefixId: this.clientId,
       searchPredicate,
     })
+    let treeAndTags = this.treeManager.getTreeAndTags()
+    // console.log(treeAndTags.tags)
+    let vtags = []
+    for (let i = 0; i < treeAndTags.tags.length; i++) {
+      let obj = treeAndTags.tags.find(e => e.value === value[i])
+      // console.log(obj)
+      vtags.push(obj)
+    }
+    treeAndTags.tags = vtags
+    this.props.onChange({}, vtags)
     this.setState(prevState => {
       const currentFocusNode = prevState.currentFocus && this.treeManager.getNodeById(prevState.currentFocus)
       if (currentFocusNode) {
@@ -101,9 +110,13 @@ class DropdownTreeSelect extends Component {
       }
       return {
         showDropdown: /initial|always/.test(showDropdown) || prevState.showDropdown === true,
-        ...this.treeManager.getTreeAndTags(),
+        ...treeAndTags,
       }
     })
+    /*  if(v.length >0)
+    {
+      this.setState({...this.state,tags : v})
+    } */
   }
 
   resetSearchState = () => {
@@ -325,12 +338,14 @@ class DropdownTreeSelect extends Component {
 
   render() {
     const { disabled, readOnly, mode, texts, inlineSearchInput, tabIndex } = this.props
-    const { showDropdown, currentFocus, tags } = this.state
+    const { showDropdown, currentFocus, tags, vtags } = this.state
     /*  console.log('tags')
     console.log(tags)
     console.log('value')
     console.log(this.props.value) */
     /*     let ttags = this.props.value && this.props.value.length>0 ? this.props.value : tags */
+    /* console.log(vtags)
+    console.log(tags) */
     const activeDescendant = currentFocus ? `${currentFocus}_li` : undefined
 
     const commonProps = { disabled, readOnly, activeDescendant, texts, mode, clientId: this.clientId }
