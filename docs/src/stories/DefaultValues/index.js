@@ -17,6 +17,7 @@ const CustomFormitem = props => {
     // setSelected(selectedNodes)
     console.log('selectedNodes')
     console.log(selectedNodes)
+    console.log(props.value)
     if (props.onChange) {
       let selected = selectedNodes.map(e => e.value)
       props.onChange(selected)
@@ -32,7 +33,7 @@ const CustomFormitem = props => {
   let data = props.data
 
   let value = ['metrics.average_page_views', 'metrics.impressions', 'metrics.clicks', 'metrics.bounce_rate']
-  value = undefined
+  /* value = undefined */
   /* for(let i in selected)
   { */
   /*    let selectedValues = selected ? selected.map(e=>e.value) :[]
@@ -120,8 +121,8 @@ const Simple = () => {
     console.log('onChange::', curNode, selectedNodes)
     //setSelected(selectedNodes)
   }
-  console.log('selected')
-  console.log(selected)
+  /*   console.log('selected')
+  console.log(selected) */
   let data = metrics.children
   //console.log(data)
   /* let data = metrics.children
@@ -142,7 +143,7 @@ const Simple = () => {
   }) */
   useEffect(() => {
     // Update the document title using the browser API
-    console.log('useEffect main')
+    //console.log('useEffect main')
   })
   return (
     <div>

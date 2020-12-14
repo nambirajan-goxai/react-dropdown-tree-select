@@ -102,7 +102,7 @@ class DropdownTreeSelect extends Component {
       vtags.push(obj)
     }
     treeAndTags.tags = vtags
-    this.props.onChange({}, vtags)
+    vtags.length > 0 && this.props.onChange({}, vtags)
     this.setState(prevState => {
       const currentFocusNode = prevState.currentFocus && this.treeManager.getNodeById(prevState.currentFocus)
       if (currentFocusNode) {
@@ -198,7 +198,9 @@ class DropdownTreeSelect extends Component {
   }
 
   onTagRemove = (id, isKeyboardEvent) => {
+    /* console.log('onTagRemove') */
     const { tags: prevTags } = this.state
+    /* console.log(prevTags) */
     this.onCheckboxChange(id, false, tags => {
       if (!isKeyboardEvent) return
 
@@ -226,10 +228,11 @@ class DropdownTreeSelect extends Component {
     const currentFocusNode = currentFocus && this.treeManager.getNodeById(currentFocus)
     const node = this.treeManager.getNodeById(id)
 
-    if (!tags.length) {
+    /* if (!tags.length) {
+      console.log('restore Called')
       this.treeManager.restoreDefaultValues()
       tags = this.treeManager.tags
-    }
+    } */
 
     const tree = searchModeOn ? this.treeManager.matchTree : this.treeManager.tree
     const nextState = {
@@ -253,8 +256,9 @@ class DropdownTreeSelect extends Component {
       callback && callback(tags)
       /*  this.props.onChange(node, tags) */
     })
-    /*   console.log('tags')
-    console.log(this.state.tags) */
+
+    /*  console.log('tags')
+    console.log(tags) */
     /*  this.setState({...this.state,tags : tags}) */
     this.props.onChange(node, tags)
   }

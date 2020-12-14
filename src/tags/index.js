@@ -53,7 +53,8 @@ const Tags = props => {
     setItems(i)
     onReorder(i)
   }
-
+  /* console.log('items')
+  console.log(items) */
   const lastItem = children || <span className="placeholder">{texts.placeholder || 'Choose...'}</span>
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
