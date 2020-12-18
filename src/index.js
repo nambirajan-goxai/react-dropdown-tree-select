@@ -224,8 +224,8 @@ class DropdownTreeSelect extends Component {
     const { mode, keepOpenOnSelect, clearSearchOnChange } = this.props
     const { currentFocus, searchModeOn } = this.state
     this.treeManager.setNodeCheckedState(id, checked)
-    console.log('tags')
-    console.log(this.state.tags)
+    /* console.log('tags')
+    console.log(this.state.tags) */
     let prevvalue = this.state.tags.map(e => e.value)
     let newtag = this.treeManager.tags.filter(e => {
       if (!prevvalue.includes(e.value)) return e
