@@ -3,7 +3,7 @@ import DropdownTreeSelect from '../../../../src'
 import '../../../../dist/styles.css'
 import './index.css'
 import data from './data.json'
-import metrics from './metrics'
+import { metrics } from './gadwFormData'
 import { Form, Button } from 'antd'
 
 const CustomFormitem = props => {
@@ -17,7 +17,7 @@ const CustomFormitem = props => {
     // setSelected(selectedNodes)
     console.log('selectedNodes')
     console.log(selectedNodes)
-    console.log(props.value)
+    /* console.log(props.value) */
     if (props.onChange) {
       let selected = selectedNodes.map(e => e.value)
       props.onChange(selected)

@@ -1,6 +1,6 @@
 {
   "name": "react-custom-dropdown-tree-select",
-  "version": "0.0.20",
+  "version": "1.0.4",
   "description": "Lightweight, customizable and fast Dropdown Tree Select component for React",
   "keywords": [
     "react",
@@ -40,8 +40,8 @@
     "dist"
   ],
   "dependencies": {
-    "array.partial": "^1.0.5",
-    "react-beautiful-dnd": "^13.0.0"
+    "array-move": "3.0.1",
+    "react-sortable-hoc": "^1.11.0"
   },
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "7.0.0-beta.46",

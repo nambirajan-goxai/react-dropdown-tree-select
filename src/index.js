@@ -103,6 +103,8 @@ class DropdownTreeSelect extends Component {
     }
     treeAndTags.tags = vtags
     vtags.length > 0 && this.props.onChange({}, vtags)
+    /* console.log('vtags')
+    console.log(vtags) */
     this.setState(prevState => {
       const currentFocusNode = prevState.currentFocus && this.treeManager.getNodeById(prevState.currentFocus)
       if (currentFocusNode) {
@@ -222,7 +224,26 @@ class DropdownTreeSelect extends Component {
     const { mode, keepOpenOnSelect, clearSearchOnChange } = this.props
     const { currentFocus, searchModeOn } = this.state
     this.treeManager.setNodeCheckedState(id, checked)
-    let tags = this.treeManager.tags
+    console.log('tags')
+    console.log(this.state.tags)
+    let prevvalue = this.state.tags.map(e => e.value)
+    let newtag = this.treeManager.tags.filter(e => {
+      if (!prevvalue.includes(e.value)) return e
+    })
+    let currvalue = this.treeManager.tags.map(e => e.value)
+    let removedTag = this.state.tags.filter(e => {
+      if (!currvalue.includes(e.value)) return e
+    })
+    let tags = this.state.tags
+    tags.push(...newtag)
+    tags = removedTag[0]
+      ? tags.filter(e => {
+          if (removedTag[0].value !== e.value) return e
+        })
+      : tags
+    /*  console.log('treetags')
+    console.log(tags)
+    console.log(newtag) */
     const isSingleSelect = ['simpleSelect', 'radioSelect'].indexOf(mode) > -1
     const showDropdown = isSingleSelect && !keepOpenOnSelect ? false : this.state.showDropdown
     const currentFocusNode = currentFocus && this.treeManager.getNodeById(currentFocus)
