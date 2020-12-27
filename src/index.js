@@ -135,24 +135,24 @@ class DropdownTreeSelect extends Component {
   }
 
   componentWillMount() {
-    // console.log('will mount called')
+    //console.log('will mount called')
     this.initNewProps(this.props)
   }
-  componentDidUpdate() {
-    //console.log('component did update called')
-    /* console.log(this.props)
-    console.log(this.state) */
-    //this.initNewProps(this.props)
-    // this.setState({...this.state,tags:this.props.value})
+  componentDidUpdate(prevProps) {
+    // console.log('component did update called')
+
+    if (JSON.stringify(this.props.data) !== JSON.stringify(prevProps.data)) this.initNewProps(this.props)
+    //this.setState({...this.state,data:this.props.data})
   }
   componentWillUnmount() {
     document.removeEventListener('click', this.handleOutsideClick, false)
   }
 
   componentWillReceiveProps(nextProps) {
-    /*  console.log('will receive props called')
+    /*    console.log('will receive props called')
     console.log(nextProps)
-    this.initNewProps(nextProps) */
+    this.setState({...this.state,data:this.props.data}) */
+    //this.initNewProps(nextProps)
   }
 
   handleClick = (e, callback) => {
