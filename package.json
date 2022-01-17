@@ -1,6 +1,6 @@
 {
   "name": "react-custom-dropdown-tree-select",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Lightweight, customizable and fast Dropdown Tree Select component for React",
   "keywords": [
     "react",
@@ -41,6 +41,9 @@
   ],
   "dependencies": {
     "array-move": "3.0.1",
+    "array.partial": "^1.0.5",
+    "react-highlight-words": "^0.17.0",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-sortable-hoc": "^1.11.0"
   },
   "devDependencies": {
@@ -50,6 +53,7 @@
     "@commitlint/config-conventional": "^7.0.0",
     "all-contributors-cli": "^5.4.1",
     "ava": "1.4.1",
+    "antd": "^4.18.3",
     "axe-core": "^3.2.2",
     "babel-core": "6.24.1",
     "babel-eslint": "10.0.1",

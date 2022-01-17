@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import Checkbox from '../checkbox'
 import RadioButton from '../radio'
+import Hightlighter from 'react-highlight-words'
 
 class NodeLabel extends PureComponent {
   static propTypes = {
@@ -38,7 +39,7 @@ class NodeLabel extends PureComponent {
   }
 
   render() {
-    const { mode, title, label, id, partial, checked, isLeaf, description } = this.props
+    const { mode, title, label, id, partial, checked, isLeaf, description, searchTerm } = this.props
     const { value, disabled, showPartiallySelected, readOnly, clientId } = this.props
     const nodeLabelProps = { className: 'node-label' }
 
@@ -68,7 +69,7 @@ class NodeLabel extends PureComponent {
             />
           )
         )}
-        <span {...nodeLabelProps}>{label}</span>
+        <Hightlighter searchWords={[searchTerm]} textToHighlight={label} />
       </label>
     )
   }
