@@ -67,6 +67,7 @@ class DropdownTreeSelect extends Component {
     this.state = {
       searchModeOn: false,
       currentFocus: undefined,
+      searchTerm: '',
     }
     this.clientId = props.id || clientIdGenerator.get(this)
   }
@@ -196,6 +197,7 @@ class DropdownTreeSelect extends Component {
       tree,
       searchModeOn,
       allNodesHidden,
+      searchTerm: value,
     })
   }
 
@@ -431,6 +433,7 @@ class DropdownTreeSelect extends Component {
                   mode={mode}
                   showPartiallySelected={this.props.showPartiallySelected}
                   {...commonProps}
+                  searchTerm={this.state.searchTerm}
                 />
               )}
             </div>

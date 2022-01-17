@@ -83,6 +83,7 @@ class Tree extends Component {
       onNodeToggle,
       activeDescendant,
       clientId,
+      searchTerm,
     } = props
     const items = []
     data.forEach(node => {
@@ -103,6 +104,7 @@ class Tree extends Component {
             readOnly={readOnly}
             clientId={clientId}
             activeDescendant={activeDescendant}
+            searchTerm={searchTerm}
           />
         )
       }

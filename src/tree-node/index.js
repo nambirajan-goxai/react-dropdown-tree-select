@@ -111,6 +111,7 @@ class TreeNode extends PureComponent {
       readOnly,
       clientId,
       description,
+      searchTerm,
     } = this.props
     const liCx = getNodeCx(this.props)
     const style = keepTreeOnSearch || !searchModeOn ? { paddingLeft: `${(_depth || 0) * 5}px` } : {}
@@ -118,7 +119,14 @@ class TreeNode extends PureComponent {
     const liId = `${_id}_li`
 
     return (
-      <li className={liCx} style={style} id={liId} {...getDataset(dataset)} {...this.getAriaAttributes()}>
+      <li
+        className={liCx}
+        style={style}
+        id={liId}
+        {...getDataset(dataset)}
+        {...this.getAriaAttributes()}
+        onClick={() => onNodeToggle(_id)}
+      >
         <Toggle isLeaf={isLeaf(_children)} expanded={expanded} id={_id} onNodeToggle={onNodeToggle} />
 
         <NodeLabel
@@ -136,6 +144,7 @@ class TreeNode extends PureComponent {
           showPartiallySelected={showPartiallySelected}
           readOnly={readOnly}
           clientId={clientId}
+          searchTerm={searchTerm}
         />
         <Actions actions={actions} onAction={onAction} id={_id} readOnly={readOnly} />
       </li>
