@@ -40,7 +40,6 @@
     "dist"
   ],
   "dependencies": {
-    "antd": "^4.18.3",
     "array-move": "3.0.1",
     "array.partial": "^1.0.5",
     "react-highlight-words": "^0.17.0",
@@ -54,6 +53,7 @@
     "@commitlint/config-conventional": "^7.0.0",
     "all-contributors-cli": "^5.4.1",
     "ava": "1.4.1",
+    "antd": "^4.18.3",
     "axe-core": "^3.2.2",
     "babel-core": "6.24.1",
     "babel-eslint": "10.0.1",
